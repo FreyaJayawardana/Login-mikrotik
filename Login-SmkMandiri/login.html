@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="title">Smk Mandiri 02 Balaraja</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="/assets/icon.png" />
+    <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700&dispplay=swap" /> -->
+</head>
+
+<script>
+    var error = "$(error)";
+    if ((error == "user $(username) has reached uptime limit") || (error == "kode voucher/user $(username) sudah mencapai batas waktu")) {
+        window.location.href = "./expired.html";
+    }
+</script>
+
+<body>
+    $(if chap-id)
+    <form name="sendin" action="$(link-login-only)" method="post">
+        <input type="hidden" name="username" />
+        <input type="hidden" name="password" />
+        <input type="hidden" name="dst" value="$(link-orig)" />
+        <input type="hidden" name="popup" value="true" />
+    </form>
+
+    <script type="text/javascript" src="md5.js"></script>
+    <script type="text/javascript">
+        function doLogin() {
+            document.sendin.username.value = document.login.username.value;
+            document.sendin.password.value = hexMD5('$(chap-id)' + document.login.password.value +
+                '$(chap-challenge)');
+            document.sendin.submit();
+            return false;
+        }
+    </script>
+    $(endif)
+
+    <div class="container-login">
+        <div class="dot"></div>
+        <div class="dot two"></div>
+        <div class="dot three"></div>
+        <div class="line"></div>
+        <span class="top"></span>
+        <span class="right"></span>
+        <span class="bottom"></span>
+        <span class="left"></span>
+
+        <div class="logo">
+            <img src="assets/logo-smk.jpg" alt="">
+        </div>
+
+        <!-- box info login -->
+
+        <div class="box" id="infologin">
+            <p>Masukan Kode Voucher</p>
+        </div>
+        <!-- box info login -->
+
+        <form class="custom-fields" name="login" autocomplete="off" action="$(link-login-only)" method="post" $(if
+            chap-id) onSubmit="return doLogin()" $(endif)>
+            <input type="hidden" name="dst" value="$(link-orig)" />
+            <input type="hidden" name="popup" value="true" />
+            <div class="username-field">
+                <input type="username" name="username" class="username-input" placeholder="username" value="$(username)"
+                    style="font-size: 20px;" />
+            </div>
+            <div class="password-field">
+                <input name="password" placeholder="password" class="password-input" type="hidden" />
+            </div>
+            <button class="btn" type="submit"><a>login</a></button>
+            <div class="btn1">$(if trial == 'yes') <a
+                    href="$(link-login-only)?dst=$(link-orig-esc)&amp;username=T-$(mac-esc)">Trial</a>.$(endif)
+            </div>
+        </form>
+        <button class="btnq" onclick="window.location='https://laksa19.github.io/myqr';">
+            <c>Kode QR</c>
+        </button>
+        $(if error)<div class="notice">$(error)</div>$(endif)
+        <!-- options button -->
+        <div class="btn-container">
+            <button class="btno" onclick="voucher();">
+                <d>Siswa</d>
+            </button>
+            <button class="btno" onclick="member();">
+                <d>Guru</d>
+            </button>
+        </div>
+        <!-- end options button -->
+        <div class="copy">
+            Smk Mandiri 02 Balaraja &copy;
+            <script>document.write(new Date().getFullYear())</script>
+        </div>
+        <script type="text/javascript">
+            var hostname = window.location.hostname;
+            document.getElementById('title').innerHTML = hostname + " > login";
+
+            document.login.username.focus();
+
+            // var infologin = document.getElementById('infologin');
+            // infologin.innerHTML = "Masukan Voucher";
+
+            // login page 2 mode by Laksamadi Guko
+            var username = document.login.username;
+            var password = document.login.password;
+
+            username.placeholder = "Kode Voucher";
+
+            // set password = username
+            function setpass() {
+                var user = username.value
+                //user = user.toLowerCase();
+                username.value = user;
+                password.value = user;
+            }
+
+            username.onkeyup = setpass;
+
+            // change to voucher mode
+            function voucher() {
+                username.focus();
+                username.onkeyup = setpass;
+                username.placeholder = "Kode Voucher";
+                username.style = "border-radius:10px;"
+                password.type = "hidden";
+                infologin.innerHTML = "";
+            }
+
+            // change to member mode
+            function member() {
+                username.focus();
+                username.onkeyup = "";
+                username.placeholder = "Username";
+                username.style = "border-radius:12px; "
+                password.type = "password";
+                infologin.innerHTML = "Masukan Username Dan Password";
+            }
+        </script>
+
+
+</body>
+
+</html>
